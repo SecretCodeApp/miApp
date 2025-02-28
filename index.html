@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechFlex - Tanques</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png">
+     <link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png">
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Mi Web App">
+<link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+        }
+        .offline {
+            background-color: #df4848 !important;
+        }
+        .normal {
+            background-color: #ccffcc;
+        }
+        .balanza {
+            border: 1px solid #dddddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 10px;
+            padding: 10px  20px 20px;
+            width: 200px;
+            text-align: center;
+            background-color: #f9f9f9;
+        }
+        .balanza:hover {
+            background-color: #40aecf;
+        }
+        .balanza h3 {
+            margin: 0;
+            font-size: 1.2em;
+            color: #333;
+        }
+        .balanza .peso {
+            font-size: 2em;
+            margin: 20px 0;
+            color: #000;
+        }
+        .balanza .estado {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            font-size: 3.2em;
+            color: #efeced;
+            background-color: rgb(223 26 26);
+            margin: 20px 10px;
+        }
+        .peso {
+            font-size: 2.2em;
+            margin: 20px 0;
+            color: #000;
+        }
+        
+        @media (max-width: 600px) {
+            .balanza {
+                width: 100%;
+                margin: 10px 0;
+            }
+            .peso {
+                font-size: 2em;
+                margin: 10px 0; 
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="balanza" id="B1">
+        <h2 id="BN1">Tanque 1 </br> CRUDO</h2>
+        <div class="peso" id="BP1">Cargando..</div>
+        <div class="estado" id="BE1">0.00  C°</div>
+    </div>
+    <div class="balanza" id="B2">
+        <h2 id="BN2">Tanque 2 </br> ASFALTO</h2>
+        <div class="peso" id="BP2">Cargando..</div>
+        <div class="estado" id="BE2">0.00  C°</div>
+    </div>
+    <div class="balanza" id="B3">
+        <h2 id="BN3">Tanque 3 </br> MEZCLA 1</h2>
+        <div class="peso" id="BP3">Cargando..</div>
+        <div class="estado" id="BE3">0.00  C°</div>
+    </div>
+    <div class="balanza" id="B4">
+        <h2 id="BN4">Tanque 4 </br> MEZCLA 2</h2>
+        <div class="peso" id="BP4">Cargando..</div>
+        <div class="estado" id="BE4">0.00  C°</div>
+    </div>
+    <div class="balanza" id="B5">
+        <h2 id="BN5">Tanque 5 </br> MEZCLA 3</h2>
+        <div class="peso" id="BP5">Cargando..</div>
+        <div class="estado" id="BE5">0.00  C°</div>
+    </div>
+    <div class="balanza" id="B6">
+        <h2 id="BN6">Tanque 6 </br> PLASTIFICADO</h2>
+        <div class="peso" id="BP6">Cargando..</div>
+        <div class="estado1" id="BE6"> -- </div>
+    </div>
+    <div class="balanza" id="B7">
+        <h2 id="BN7">Tanque 7 </br> PROCESO</h2>
+        <div class="peso" id="BP7">Cargando..</div>
+        <div class="estado" id="BE7">0.00  C°</div>
+    </div>
+    <div class="balanza" id="B8">
+        <h2 id="BN8">Tanque 8 </br> MODIFICADO</h2>
+        <div class="peso" id="BP8">Cargando..</div>
+        <div class="estado" id="BE8">0.00  C°</div>
+    </div>
+    <div class="balanza" id="B9">
+        <h2 id="BN9">Tanque 9 </br> SILO 1</h2>
+        <div class="peso" id="BP9">Cargando..</div>
+        <div class="estado1" id="BE9"> -- </div> 
+    </div>
+    <div class="balanza" id="B10">
+        <h2 id="BN10">Tanque 10 </br> SILO 2</h2>
+        <div class="peso" id="BP10">Cargando..</div>
+        <div class="estado1" id="BE10"> --</div> 
+    </div>
+    <script>
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/service-worker.js')
+              .then(registration => {
+                console.log('Service Worker registrado con éxito:', registration);
+              })
+              .catch(error => {
+                console.error('Error al registrar el Service Worker:', error);
+              });
+          }
+        const temporal="http://200.59.9.141:2500";
+
+        async function fetchData() {
+            try {
+                const response = await fetch(temporal+'/tara');
+                const jsonData = await response.json();
+                console.log(jsonData);
+                actualizarDatos(jsonData);
+            } catch (error) {
+                console.error('Error al obtener los datos:', error);
+            }
+        }
+
+        async function fetchData2() {
+            try {
+                const response = await fetch(temporal+'/temp');
+                const jsonData = await response.json();
+                console.log(jsonData);
+                actualizarTemperaturas(jsonData);
+            } catch (error) {
+                console.error('Error al obtener Temperaturas:', error);
+            }
+        }
+ 
+            function dividirYActualizar(jsonData2) {
+                return jsonData2.map(value => value / 10);
+            }
+    
+            function actualizarTemperaturas(jsonData2) { 
+                const dividedData = dividirYActualizar(jsonData2);
+                document.getElementById(`BE3`).innerHTML = dividedData[0] + " C°";
+                document.getElementById(`BE4`).innerHTML = dividedData[2] + " C°";
+                document.getElementById(`BE5`).innerHTML = dividedData[4] + " C°";                    
+                document.getElementById(`BE2`).innerHTML = dividedData[6] + " C°"; 
+                document.getElementById(`BE7`).innerHTML = dividedData[8] + " C°";   
+            }
+
+            function actualizarDatos(jsonData) {
+                jsonData.forEach((balanza, index) => {
+                    const balanzaRow = document.getElementById(`B${index + 1}`);
+                    const peso = document.getElementById(`BP${index + 1}`).innerHTML = `${balanza[5]} kg`;  
+                    balanzaRow.classList.remove('offline');
+                   console.log(balanza[0]);
+
+                    if (balanza[0] != 0) {
+                        document.getElementById(`BP${index + 1}`).innerHTML = "**"; 
+                        balanzaRow.classList.add('offline');
+                    } 
+                });
+            }
+    
+            fetchData();
+            fetchData2(); 
+            setInterval(fetchData, 35000);
+            setInterval(fetchData2, 28000);
+        </script>
+</body>
+</html>
