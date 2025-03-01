@@ -2,7 +2,7 @@ const cacheName = 'mi-web-app-v1';
 const assets = [
   '/',
   '/index.html', 
-  '/script.js'
+  '/favicon.ico',
   // Agrega aquí otros recursos que necesites cachear.
 ];
 

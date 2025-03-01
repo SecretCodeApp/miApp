@@ -4,14 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechFlex - Tanques</title>
+    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+    
+   <link rel="icon" type="image/x-icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="32x32" href="/icon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="/icon/favicon-16x16.png">
     <link rel="manifest" href="/manifest.json">
+     
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="TechFlex Tanques">
-    <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
     <meta name="theme-color" content="#40aecf">
+    <meta name="msapplication-TileColor" content="#40aecf">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -93,7 +97,7 @@
 <body>
     <div class="balanza" id="B1">
         <h2 id="BN1">Tanque 1 </br> CRUDO</h2>
-        <div class="peso" id="BP1">Cargando..</div>
+        <div class="peso" id="BP1"> ..</div>
         <div class="estado" id="BE1">0.00  C°</div>
     </div>
     <div class="balanza" id="B2">
@@ -141,8 +145,7 @@
         <div class="peso" id="BP10">Cargando..</div>
         <div class="estado1" id="BE10"> --</div> 
     </div>
-    <script>
-        // Configuración de la API
+    <script> 
         const API_CONFIG = {
             baseUrl: "http://200.59.9.141:2500",
             endpoints: {
@@ -154,8 +157,7 @@
                 temperature: 28000
             }
         };
-
-        // Registro del Service Worker
+ 
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('/service-worker.js')
                 .then(registration => { })
@@ -163,8 +165,7 @@
                     console.error('Error al registrar el Service Worker:', error);
                 });
         }
-
-        // Funciones de utilidad
+ 
         const api = {
             async fetchWeight() {
                 try {
@@ -229,8 +230,7 @@
                 }
             });
         }
-
-        // Inicialización
+ 
         function iniciarAplicacion() {
             api.fetchWeight();
             api.fetchTemperature();
@@ -238,8 +238,7 @@
             setInterval(api.fetchWeight, API_CONFIG.refreshIntervals.weight);
             setInterval(api.fetchTemperature, API_CONFIG.refreshIntervals.temperature);
         }
-
-        // Iniciar la aplicación
+ 
         iniciarAplicacion();
     </script>
 </body>
