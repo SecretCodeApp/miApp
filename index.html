@@ -25,74 +25,24 @@
             justify-content: space-around;
             background-color: #f5f5f5;
         }
-        .offline {
-            background-color: #df4848 !important;
-        }
-        .normal {
-            background-color: #ccffcc;
-        }
-        .balanza {
-            border: 1px solid #dddddd;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            margin: 10px;
-            padding: 10px 20px 20px;
-            width: 200px;
-            text-align: center;
-            background-color: #f9f9f9;
-            transition: all 0.3s ease;
-        }
-        .balanza:hover {
-            background-color: #40aecf;
-            transform: translateY(-5px);
-        }
-        .balanza h3 {
-            margin: 0;
-            font-size: 1.2em;
-            color: #333;
-        }
-        .balanza .peso {
-            font-size: 2em;
-            margin: 20px 0;
-            color: #000;
-        }
-        .balanza .estado, .balanza .estado1 {
-            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 3.2em;
-            color: #efeced;
-            background-color: rgb(223 26 26);
-            margin: 20px 10px;
-            border-radius: 4px;
-            padding: 5px;
-        }
-        .balanza .estado1 {
-            background-color: #666;
-        }
-        .peso {
-            font-size: 2.2em;
-            margin: 20px 0;
-            color: #000;
-        }
-        
-        @media (max-width: 600px) {
-            .balanza {
-                width: 100%;
-                margin: 10px 0;
-            }
-            .peso {
-                font-size: 2em;
-                margin: 10px 0; 
-            }
-        }
-        .loading {
-            animation: pulse 1.5s infinite;
-        }
-        @keyframes pulse {
-            0% { opacity: 0.6; }
-            50% { opacity: 1; }
-            100% { opacity: 0.6; }
-        }
-    </style>
+  
+    /* ...existing styles... */
+    
+    .iframe-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        z-index: 1000;
+    }
+    
+    .iframe-container iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
+</style>
 </head>
 <body>
   
