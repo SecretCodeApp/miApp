@@ -95,151 +95,16 @@
     </style>
 </head>
 <body>
-    <div class="balanza" id="B1">
-        <h2 id="BN1">Tanque 1 </br> CRUDO</h2>
-        <div class="peso" id="BP1"> ..</div>
-        <div class="estado" id="BE1">0.00  C°</div>
+  
+    <!-- ...existing code... -->
     </div>
-    <div class="balanza" id="B2">
-        <h2 id="BN2">Tanque 2 </br> ASFALTO</h2>
-        <div class="peso" id="BP2">Cargando..</div>
-        <div class="estado" id="BE2">0.00  C°</div>
+    
+    <div class="iframe-container">
+        <iframe src="http://200.59.9.141:2000" frameborder="0"></iframe>
     </div>
-    <div class="balanza" id="B3">
-        <h2 id="BN3">Tanque 3 </br> MEZCLA 1</h2>
-        <div class="peso" id="BP3">Cargando..</div>
-        <div class="estado" id="BE3">0.00  C°</div>
-    </div>
-    <div class="balanza" id="B4">
-        <h2 id="BN4">Tanque 4 </br> MEZCLA 2</h2>
-        <div class="peso" id="BP4">Cargando..</div>
-        <div class="estado" id="BE4">0.00  C°</div>
-    </div>
-    <div class="balanza" id="B5">
-        <h2 id="BN5">Tanque 5 </br> MEZCLA 3</h2>
-        <div class="peso" id="BP5">Cargando..</div>
-        <div class="estado" id="BE5">0.00  C°</div>
-    </div>
-    <div class="balanza" id="B6">
-        <h2 id="BN6">Tanque 6 </br> PLASTIFICADO</h2>
-        <div class="peso" id="BP6">Cargando..</div>
-        <div class="estado1" id="BE6"> -- </div>
-    </div>
-    <div class="balanza" id="B7">
-        <h2 id="BN7">Tanque 7 </br> PROCESO</h2>
-        <div class="peso" id="BP7">Cargando..</div>
-        <div class="estado" id="BE7">0.00  C°</div>
-    </div>
-    <div class="balanza" id="B8">
-        <h2 id="BN8">Tanque 8 </br> MODIFICADO</h2>
-        <div class="peso" id="BP8">Cargando..</div>
-        <div class="estado" id="BE8">0.00  C°</div>
-    </div>
-    <div class="balanza" id="B9">
-        <h2 id="BN9">Tanque 9 </br> SILO 1</h2>
-        <div class="peso" id="BP9">Cargando..</div>
-        <div class="estado1" id="BE9"> -- </div> 
-    </div>
-    <div class="balanza" id="B10">
-        <h2 id="BN10">Tanque 10 </br> SILO 2</h2>
-        <div class="peso" id="BP10">Cargando..</div>
-        <div class="estado1" id="BE10"> --</div> 
-    </div>
-    <script> 
-        const API_CONFIG = {
-            baseUrl: "http://200.59.9.141:2500",
-            endpoints: {
-                weight: '/tara',
-                temperature: '/temp'
-            },
-            refreshIntervals: {
-                weight: 35000,
-                temperature: 28000
-            }
-        };
- 
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/service-worker.js')
-                .then(registration => { })
-                .catch(error => {
-                    console.error('Error al registrar el Service Worker:', error);
-                });
-        }
- 
-        const api = {
-            async fetchWeight() {
-                try {
-                    const response = await fetch(API_CONFIG.baseUrl + API_CONFIG.endpoints.weight);
-                    const jsonData = await response.json();
-                    console.log('Datos de peso:', jsonData);
-                    actualizarDatos(jsonData);
-                } catch (error) {
-                    console.error('Error al obtener los datos de peso:', error);
-                    marcarError();
-                }
-            },
 
-            async fetchTemperature() {
-                try {
-                    const response = await fetch(API_CONFIG.baseUrl + API_CONFIG.endpoints.temperature);
-                    const jsonData = await response.json(); 
-                    actualizarTemperaturas(jsonData);
-                } catch (error) {
-                    console.error('Error al obtener las temperaturas:', error);
-                }
-            }
-        };
+    <script>
+    // ...existing code...
 
-        function marcarError() {
-            for (let i = 1; i <= 10; i++) {
-                const balanzaRow = document.getElementById(`B${i}`);
-                balanzaRow.classList.add('offline');
-                document.getElementById(`BP${i}`).innerHTML = "Error de conexión";
-            }
-        }
-
-        function dividirYActualizar(jsonData2) {
-            return jsonData2.map(value => value / 10);
-        }
-
-        function actualizarTemperaturas(jsonData2) {
-            const dividedData = dividirYActualizar(jsonData2);
-            const temperaturas = {
-                3: 0,
-                4: 2,
-                5: 4,
-                2: 6,
-                7: 8
-            };
-
-            Object.entries(temperaturas).forEach(([tanque, indice]) => {
-                document.getElementById(`BE${tanque}`).innerHTML = dividedData[indice] + " C°";
-            });
-        }
-
-        function actualizarDatos(jsonData) {
-            jsonData.forEach((balanza, index) => {
-                const balanzaRow = document.getElementById(`B${index + 1}`);
-                const pesoElement = document.getElementById(`BP${index + 1}`);
-                
-                balanzaRow.classList.remove('offline');
-                pesoElement.innerHTML = balanza[0] !== 0 ? "**" : `${balanza[5]} kg`;
-                
-                if (balanza[0] !== 0) {
-                    balanzaRow.classList.add('offline');
-                }
-            });
-        }
- 
-        function iniciarAplicacion() {
-            api.fetchWeight();
-            api.fetchTemperature();
-
-            setInterval(api.fetchWeight, API_CONFIG.refreshIntervals.weight);
-            setInterval(api.fetchTemperature, API_CONFIG.refreshIntervals.temperature);
-        }
- 
-        iniciarAplicacion();
-    </script>
 </body>
 </html>
