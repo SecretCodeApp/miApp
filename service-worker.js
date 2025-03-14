@@ -2,8 +2,8 @@ const CACHE_NAME = 'mi-pwa-v1';
 const STATIC_ASSETS = [
     '/',
     '/index.html',
-    '/styles.css',
-    '/app.js',
+    '/css/styles.css',
+    '/js/app.js',
     '/manifest.json',
     '/offline.html',
     '/icons/icon-192x192.png',
