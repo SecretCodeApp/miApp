@@ -1,5 +1,5 @@
 if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('https://secretcodeapp.github.io/service-worker.js')
+    navigator.serviceWorker.register('https://secretcodeapp.github.io/miApp/service-worker.js')
         .then(() => console.log('Service Worker registrado'))
         .catch((err) => console.error('Error al registrar Service Worker:', err));
 }
